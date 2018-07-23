@@ -61,6 +61,26 @@ class ListSuite extends FunSuite {
     }
   }
 
+  test("Se pueden concantenar listas") {
+    val l1 = List(1, 2)
+    val l2 = List( 3, 4)
+
+
+  }
+
+
+
+  test("addicionar lista al principio y al final") {
+    val l1 = List(2,3,4)
+    val res =  1:: (l1:+5)
+
+
+    assert(res==List(1,2,3,4,5))
+
+
+  }
+
+
   test("A una lista se le pueden descartar elementos en una direccion determinada (right)") {
     val lista = List(1, 2, 3, 4)
     assertResult(List(1, 2)) {
@@ -103,10 +123,28 @@ class ListSuite extends FunSuite {
         numero % 2 == 0
       )
 
-      lista.filter(_%2==0)
+      lista.filter(_%2==0) // no utilizar guion bajo
 
     }
   }
+
+  test("Una lista con dropwhile") {
+    val l = List(1, 2, 3, 4,5)
+
+    val r = l.dropWhile( x => x%2!=0)
+    print (r)
+
+    val r2 = l.dropWhile( x => x%2 ==0)
+    println(r2)
+    assert (r2==List(1,2,3,4,5))
+
+
+
+
+  }
+
+
+
 
   test("Una lista se debe poder acumular") {
     val lista = List(1, 2, 3, 4)
@@ -116,6 +154,17 @@ class ListSuite extends FunSuite {
       }
     }
   }
+
+  test("Una lista se debe poder acumular mutiplicacion") {
+    val lista = List(1, 2, 3, 4)
+    assertResult(24) {
+      lista.fold(1) { (acumulado, item) =>
+        acumulado * item
+      }
+    }
+  }
+
+
 
   test("Una lista se debe poder acumular en una direccion determinada (izquierda)") {
     val lista = List("Andres", "Felipe", "Juan", "Carlos")
@@ -152,7 +201,9 @@ class ListSuite extends FunSuite {
 
   test("test - obtenga el promedio de los numeros pares") {
     val lista = List(1, 2, 3, 4, 6, 7, 8, 9, 10)
-    assert(true)
+
+
+
   }
 
   test("Una lista se debe poder dividir") {
@@ -183,6 +234,12 @@ class ListSuite extends FunSuite {
     assert(result == None)
   }
 
+  test("Se debe poder acceder al primer elemento de List() no vacia de forma segura") {
+    val lista = List(1,2,3,4)
+    val result = lista.headOption
+    assert(result == Some(1))
+  }
+
 
   test("Una List se debe poder transformar") {
 
@@ -196,6 +253,27 @@ class ListSuite extends FunSuite {
     assert(lista != lista2)
     assert(lista2 == lista3)
   }
+
+  test("Una Lista de string convertir a entero") {
+
+    def convertNUmero(s:String):Int = s.length
+
+    var cont=0
+    val lista = List("a", "b", "c", "d")
+    val lista2 = lista.map(dato =>
+      lista.length
+    )
+
+
+    assert(lista2.head == "1prueba")
+    assert(lista != lista2)
+
+  }
+
+
+
+
+
 
   test("Verificacion de map sobre una List"){
     case class MyCaseClass(nro:Int)

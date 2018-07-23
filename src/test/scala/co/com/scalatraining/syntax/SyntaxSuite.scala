@@ -24,7 +24,7 @@ class SyntaxSuite extends FunSuite{
     assert(x == 0)
 
     // Aunque tambien lo puedes hacer explicito si asi lo quieres
-    val y= "0"
+    val y  = "0"
     assert(y == "0")
 
     // Si eres incredulo fijate como el tipo es fuerte y no debil
@@ -54,7 +54,7 @@ class SyntaxSuite extends FunSuite{
         a + x
       }
 
-      def f2(a: Int) = {
+      def f2(a: Int): Int = {
         a + 2
       }
     }
@@ -77,7 +77,10 @@ class SyntaxSuite extends FunSuite{
     // A una class se le debe instanciar con new pasándole los atributos que define para su construccion
     val mc: MyClass = new MyClass(1)
     val res = mc.f1
-    assert(res == 2)
+    val mc2: MyClass = new  MyClass(1)
+    val res2 = mc2.f1
+
+    assert(mc != mc2)
   }
 
   test("A un class se le puede  mutar su estado"){
@@ -114,7 +117,7 @@ class SyntaxSuite extends FunSuite{
     }
 
     // Se puede instanciar de forma normal
-    val mcc1 = new MyCaseClass(1, 2)
+    val mcc1 = new MyCaseClass(3, 2)
     assert(mcc1.f1(1) == 2)
 
     // Se puede instanciar sin new
@@ -162,6 +165,21 @@ class SyntaxSuite extends FunSuite{
     assert(res == 2)
   }
 
+  test("prueba de crear object"){
+    trait MyTrait{
+      def f1(a:Int) = a + 1
+    }
+
+    object obj extends MyTrait{
+      override def f1(a: Int): Int = a+2
+    }
+
+    val res = obj.f1(1)
+    assert(res == 3)
+    }
+
+
+
 
   test("Pattern matching"){
     case class Profesor(nombre:String)
@@ -182,6 +200,8 @@ class SyntaxSuite extends FunSuite{
     }
 
   }
+
+
 
   test("verificacion de unapply"){
     class Profesor(nombre:String)
