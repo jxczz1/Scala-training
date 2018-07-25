@@ -142,6 +142,41 @@ class SetSuite extends FunSuite {
     assert(r.tail.tail.head==3)
     assert(r.tail.tail.tail.head==2)
   }
+ //union de dos conjuntos
+  test("probando set union"){
+
+    val set = Set(1,2,4,5,6)
+    val set2 = Set(1,2,4,5)
+
+    val union = set.foldLeft(set2) ((acomulado,item)=>acomulado+item)
+    println("union aquii"+union)
+    val interseccion = set.filter(x=>set2(x))
+
+  }
+
+  test("probando set interseccion"){
+
+    val set = Set(1,2,4,5,6)
+    val set2 = Set(1,2,4,5)
+
+    val interseccion = set.filter(x=>set2(x))
+    println("interseccion aquii"+interseccion)
+  }
+
+  test("probando set resta"){
+
+    val set = Set(1,2,4,5,6)
+    val set2 = Set(1,2,4,5,7)
+
+    val resta = set.filterNot(elem => set2.contains(elem))
+
+    assert(Set(6)==resta)
+
+  }
+
+
+
+
 
   test("BitSet"){
     val s = BitSet.empty

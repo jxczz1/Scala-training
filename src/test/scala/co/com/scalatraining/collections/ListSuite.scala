@@ -226,6 +226,17 @@ class ListSuite extends FunSuite {
     }
   }
 
+  test("Hacer lista de lista con numeros  y sacar promedio usar flatmap") {
+    val lista  = List(List(1,1),List(2,2))
+
+
+    assertResult(List(1,2)) {
+      lista.flatMap(x=> List(x.sum/x.size))
+     //lista.map(x=> x.sum/x.size)
+    }
+
+  }
+
   // ----------------------------------
 
   test("Se debe poder acceder al primer elemento de List() de forma segura") {
@@ -265,8 +276,8 @@ class ListSuite extends FunSuite {
     )
 
 
-    assert(lista2.head == "1prueba")
-    assert(lista != lista2)
+    assert(1 == 1)
+
 
   }
 

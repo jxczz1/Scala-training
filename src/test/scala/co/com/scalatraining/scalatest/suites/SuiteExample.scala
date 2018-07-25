@@ -12,5 +12,11 @@ class SuiteExample extends FunSuite {
     assertThrows[NoSuchElementException] {
       Set.empty.head
     }
+
+
+
+
+
+
   }
 }

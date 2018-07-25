@@ -8,21 +8,31 @@ class MapSuite extends FunSuite {
 
   test ("Creacion vacia") {
       val mapa1 = Map()
-      val mapa2 = Map.empty
+      val mapa2 = Map.empty//vacio
       assert(mapa1.isEmpty)
       assert(mapa2.isEmpty)
       assert(mapa1 == mapa2)
   }
 
   test("foreach en un Map") {
-    val map = Map("1" -> 1, "2" -> 2, "3" -> 3)
+    val map : Map[String, Int] = Map("1" -> 1, "2" -> 2, "3" -> 3) //(KEY,VALUE)
     assertResult(6) {
       var sum = 0
-      map.foreach((x) =>
-        sum += x._2
+      map.foreach((x) => //X Entre parensitesis porque e suna funcion
+        sum += x._2 //posicion 2
       )
       sum
     }
+
+    assertResult(6) {
+      var sum2 = 0
+      map.foreach { case (k, v) => //X Entre parensitesis porque e suna funcion
+        sum2 += v
+      }
+
+      sum2
+    }
+
   }
 
   test("Un Map se debe poder operar en un for-comp"){
@@ -129,5 +139,19 @@ class MapSuite extends FunSuite {
       map.mapValues(valor => valor * valor)
     }
   }
+
+  test("String texto largo retornar mapa por cada palabra") {
+
+
+
+    val texto = "hola a todos"
+    val map  = texto.split(" ").map(x => x).groupBy(identity).mapValues(_.size)
+
+
+
+
+    assert( Map("hola" -> 1, "a" -> 1, "todos" -> 1)=== map)
+  }
+
 
 }
