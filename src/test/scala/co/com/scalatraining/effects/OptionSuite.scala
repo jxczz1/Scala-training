@@ -391,11 +391,6 @@ class OptionSuite extends FunSuite {
 
 
 
-  test("Caso 10 cuando pattern match es igual que hacer orElse") {
-
-
-  }
-
 
   test("Caso 11 cuando pattern match es igual que hacer getOrElse") {
 
