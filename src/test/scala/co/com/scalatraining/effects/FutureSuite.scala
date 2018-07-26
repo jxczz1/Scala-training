@@ -182,6 +182,20 @@ class FutureSuite extends FunSuite {
 
   }
 
+
+
+  test("probando FUTURE 2") {
+
+    def suma (n1:Int, n2:Int): Int= {
+      n1+n2
+    }
+
+    val res=Future( suma(1,4))
+
+    println(s"Aqui esta mi futuro ${res}")
+
+  }
+
   test("Se debe poder manejar el error de un Future de forma funcional asincronamente") {
 
     var threadName1 = ""
@@ -334,7 +348,7 @@ class FutureSuite extends FunSuite {
     }
 
     val resFuture = resSequence.map(l => l.sum/l.size)
-
+     println (s"${resFuture}")
     val res = Await.result(resFuture, 10 seconds)
 
     assert(res ==  Range(1,11).sum/Range(1,11).size)
@@ -352,6 +366,163 @@ class FutureSuite extends FunSuite {
     assert(res ==  Range(1,11).sum/Range(1,11).size)
 
   }
+  /*
+   servicio de clima (5)
+   2.guardar bd el valor (1)
+   */
+
+
+  test("Problema servicio de clima ") {
+
+   // var threadName1 = ""
+    // var threadName2 = ""
+    var threadName3 = ""
+    var threadName4 = ""
+   //var c = ""
+    //var d = ""
+    var a = ""
+    var b = ""
+
+    def clima(): String = "13 C"
+
+    def guardarValor(i: Int): String = s"Informacion guardada en la BD"
+
+
+     val hiloClima = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(5))
+     val hiloGuardar = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(1))
+/*
+    (1 to 10) foreach { _ =>
+
+      val f1 = Future {
+        threadName1 = Thread.currentThread().getName
+
+        c = clima()
+        println(s" Este es el HILO DE CLIMA  ${threadName1}")
+        println(s" CLima  aquiii:  ${c}")
+        println(s" Tiempo llamado de ejecucion ${System.nanoTime()}")
+        Thread.sleep(100)
+
+      }(hiloClima) // Se especifica el hilo que usa con currying
+
+
+      val f2 = Future {
+        threadName2 = Thread.currentThread().getName
+        d = guardarValor(1)
+
+        println(s" Este es el HILO DE GUARDAR  ${threadName2}")
+        println(s" Resultado  aquiii:  ${d}")
+        println(s" Tiempo  llamado  de ejecucion${System.nanoTime()}")
+        Thread.sleep(100)
+      }(hiloGuardar) // Se especifica el hilo que usa con currying
+   */
+      // forma dos de generar la concurrencia
+
+      def obtenerClima() : Future[Int] = Future {
+        threadName3 = Thread.currentThread().getName
+
+        a = clima()
+        println(s" Este es el HILO DE CLIMA Mejorado   ${threadName3}")
+        println(s" CLima  aquiii:  ${a}")
+        println(s" Tiempo llamado de ejecucion ${System.nanoTime()}")
+        Thread.sleep(100)
+        1
+
+      }(hiloClima) // Se especifica el hilo que usa con currying
+
+
+      def guardar(n:Int) : Future[String] = Future {
+        threadName4 = Thread.currentThread().getName
+
+        b = guardarValor(1)
+        println(s" Este es el HILO DE guardar  Mejorado ${threadName4}")
+        println(s" CLima  aquiii:  ${b}")
+        println(s" Tiempo llamado de ejecucion ${System.nanoTime()}")
+        Thread.sleep(100)
+        s"Guardar : ${n}"
+
+      }(hiloGuardar) // Se especifica el hilo que usa con currying
+
+       val z = Future.sequence{Range(1,15).map(x=> obtenerClima().flatMap(srt => guardar(srt)))}
+
+
+
+    }
+
+    test("Problema Consultar repositorio"){
+
+      var threadName: String = ""
+      var threadName2: String = ""
+
+
+      case class repositorio(nombre :String, lineas :String ,lenguaje :String)
+      val r1 = new repositorio("damaris","10","python")
+      val r2= new repositorio("juanito","35","java")
+      val r3= new repositorio("andrea","22","java")
+      val r4= new repositorio("julian","30","c")
+      val r5= new repositorio("julian","40","java")
+      val r6 = new repositorio("damaris","25","java")
+
+      println(s"${r1}")
+      println(s"${r2}")
+      println(s"${r3}")
+      println(s"${r4}")
+
+
+      val pplhilo = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(5))
+      val pplhilo2 = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(5))
+
+      case class usuarioCompleto(nombre:String)
+
+
+
+     def obtenerUsuario(usuario:String) : Future[List[repositorio]] = Future {
+        threadName = Thread.currentThread().getName
+       println(s"Hilo de Obtener usuario {$threadName} ")
+        val lista :List[repositorio]= List(r1,r2,r3,r4,r5,r6)
+        val lista2 = lista.filter(x => usuario==x.nombre)
+        lista2
+      }(pplhilo2)
+
+
+      //def obtenerDetalle(): Future[List[repositorio]] ={
+
+
+
+     // }
+
+
+
+      val res = Await.result(obtenerUsuario("damaris"), 10 seconds)
+
+      println(s"Aqui esta la respuestaaaaa {$res}")
+
+      /*
+     def obtenerRepositorio(lista: List[repositorio]):Future[repositorio]=Future{
+
+       threadName2 = Thread.currentThread().getName
+       println(s"Hilo de Obtener usuario {$threadName2} ")
+
+       val lista2 = lista.flatMap(x => x.lenguaje== "Java")
+      lista2
+
+
+     }( pplhilo2)
+*/
+
+
+
+     /* def obtenerUsuarioCompleto(usuario:String) : Future[String] = Future {
+        threadName2 = Thread.currentThread().getName
+       ""
+      }(pplhilo) // Se especifica el hilo que usa con currying*/
+
+
+
+
+
+
+    }
+
 
 
 }

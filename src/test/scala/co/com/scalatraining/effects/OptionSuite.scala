@@ -393,16 +393,38 @@ class OptionSuite extends FunSuite {
 
 
   test("Caso 11 cuando pattern match es igual que hacer getOrElse") {
+   val  res = Some(2)
+    val res1 = res.getOrElse(Option(3))
+    val res2 = None.getOrElse(2)
 
+    assert(res1== 2)
+    assert(res2 == 2)
 
   }
 
   test("Caso 12 cuando pattern match es igual que hacer toList") {
+    val  res = Some(2)
+    val res1 = res.toList
+    val res2 = None.toList
 
+    assert(res1== List(2))
+    assert(res2 == List())
 
   }
 
   test("Caso 13 cuando pattern match es igual que hacer coflatMap") {
+    def foo(n: Int ): Option[Int] ={
+
+      if(n %2 ==0) Some(n)
+      else
+        None
+    }
+
+    def pm(option: Option [ Option[Int]]): Option[Int] =option match {
+      case None => None
+      case Some(x) => x
+
+    }
 
 
   }
